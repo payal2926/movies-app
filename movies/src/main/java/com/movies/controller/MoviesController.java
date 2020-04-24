@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.movies.exception.MovieError;
 import com.movies.exception.MovieNotFoundException;
+import com.movies.model.Constants;
 import com.movies.model.Movie;
 import com.movies.service.MoviesService;
 
@@ -34,8 +36,11 @@ public class MoviesController {
 
     // Create a new Movie
     @PostMapping("/movies/add")
-    public Movie createMovie(@RequestBody Movie movie) {
-        return movieService.addMovie(movie);
+    public ResponseEntity<Object> createMovie(@RequestBody Movie movie) {
+    	if( 0.5 > movie.getRating() || movie.getRating() >5.0) {
+    		return ResponseEntity.badRequest().body(new MovieError(Constants.ERROR_CODE, Constants.RATING_ERROR_MESSAGE));
+    	}
+        return ResponseEntity.ok(movieService.addMovie(movie));
     }
 
     // Get a Single Movie
@@ -46,9 +51,12 @@ public class MoviesController {
 
     // Update a Movie
     @PutMapping("/movies/{id}")
-    public Movie updateMovie(@PathVariable(value = "id") Long movieId,
+    public ResponseEntity<Object> updateMovie(@PathVariable(value = "id") Long movieId,
                            @Valid @RequestBody Movie movieDetails) throws MovieNotFoundException {
-    	return	movieService.editMovie(movieDetails, movieId);
+    	if( 0.5 > movieDetails.getRating() || movieDetails.getRating() >5.0) {
+    		return ResponseEntity.badRequest().body(new MovieError(Constants.ERROR_CODE, Constants.RATING_ERROR_MESSAGE));
+    	}
+    	return	ResponseEntity.ok(movieService.editMovie(movieDetails, movieId));
     }
 
     // Delete a Movie

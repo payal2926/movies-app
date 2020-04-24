@@ -30,7 +30,6 @@ public class MoviesServiceImpl implements MoviesService{
 		movie.setRating(movieDetails.getRating());
 		movie.setTitle(movieDetails.getTitle());
         Movie updatedMovie = movieDao.save(movie);
-
         return updatedMovie;
 		
 	}
