@@ -18,12 +18,5 @@ dependencies {
     compile "org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1"
 	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.13'
 	testCompile group: 'org.springframework.boot', name: 'spring-boot-test'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
-}
-
-test {
-	useJUnitPlatform()
-	useJUnit()
+	testImplementation('org.springframework.boot:spring-boot-starter-test') 
 }

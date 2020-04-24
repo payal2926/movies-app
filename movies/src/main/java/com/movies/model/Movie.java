@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "movies")
@@ -14,7 +17,11 @@ public class Movie {
 	private Long id;
 	private String title;
 	private String category;
-	private double rating;
+	
+	@NotNull
+	@DecimalMax(value= "5")
+	@DecimalMin(value ="0.5")
+	private Double rating;
 	
 	public Long getId() {
 		return id;
@@ -34,11 +41,11 @@ public class Movie {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public double getRating() {
+	public Double getRating() {
 		return rating;
 	}
-	public void setRating(double rating) {
-		this.rating = rating;
+	public void setRating(Double i) {
+		this.rating = i;
 	}
 	
 }
