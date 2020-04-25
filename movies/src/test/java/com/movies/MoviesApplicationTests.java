@@ -41,12 +41,12 @@ public class MoviesApplicationTests {
 		movie.setTitle("Movie Title");
 		movie.setId(2l);
 		when(movieDao.findById(2l)).thenReturn(Optional.of(movie));
-		movieService.editMovie(movie, 2l);
 		// rating updated
 		movie.setRating(3d);
 		when(movieDao.save(movie)).thenReturn(movie);
 		// ASSERTIONS
-		assertEquals(Double.valueOf(3), movie.getRating());
+		Movie updatedMovie = movieService.editMovie(movie, 2l);
+		assertEquals(Double.valueOf(3), updatedMovie.getRating());
 	}
 
 	@Test
@@ -55,8 +55,9 @@ public class MoviesApplicationTests {
 		movie.setCategory("Test Category");
 		movie.setRating(2d);
 		movie.setTitle("Movie Title");
-		when(movieService.addMovie(movie)).thenReturn(movie);
-		assertNotNull(movie);
+		when(movieDao.save(movie)).thenReturn(movie);
+		Movie addedMovie = movieService.addMovie(movie);
+		assertNotNull(addedMovie);
 	}
 
 	@Test
